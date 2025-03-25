@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="UTF-8">
+    <head>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI-BASED OS MONITOR</title>
         <link rel="stylesheet" href="style.css">
@@ -12,22 +13,28 @@
         </header>
         <main>
             <section class="dashboard">
-                <div class="card">
+                <div class="card" aria-label="CPU Usage Chart">
                     <h2>CPU Usage</h2>
-                    <canvas id="cpuCart"></canvas>
+                    <canvas id="cpuChart"></canvas>
+                    <p id="cpuMessage">Loading data...</p>
                 </div>
-                <div class="card">
+                <div class="card" aria-label="Memory Usage Chart">
                     <h2>Memory Usage</h2>
-                    <canvas id="memoryCart"></canvas>
+                    <canvas id="memoryChart"></canvas>
+                    <p id="memoryMessage">Loading data...</p>
                 </div>
-                <div class="card">
+                <div class="card" aria-label="Network Usage Chart">
                     <h2>Network Usage</h2>
                     <canvas id="networkChart"></canvas>
+                    <p id="networkMessage">Loading data...</p>
                 </div>
             </section>
         </main>
         <footer>
             <p>AI-BASED OS MONITOR &copy; 2025</p>
         </footer>
+        <noscript>
+            <p>Please enable JavaScript to view the OS monitor dashboard.</p>
+        </noscript>
     </body>
 </html>
