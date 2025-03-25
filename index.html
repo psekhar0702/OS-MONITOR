@@ -1,40 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AI-BASED OS MONITOR</title>
-        <link rel="stylesheet" href="style.css">
-        <script defer src="script.js"></script>
-    </head>
-    <body>
-        <header>
-            <h1>AI-BASED OS MONITOR</h1>
-        </header>
-        <main>
-            <section class="dashboard">
-                <div class="card" aria-label="CPU Usage Chart">
-                    <h2>CPU Usage</h2>
-                    <canvas id="cpuChart"></canvas>
-                    <p id="cpuMessage">Loading data...</p>
-                </div>
-                <div class="card" aria-label="Memory Usage Chart">
-                    <h2>Memory Usage</h2>
-                    <canvas id="memoryChart"></canvas>
-                    <p id="memoryMessage">Loading data...</p>
-                </div>
-                <div class="card" aria-label="Network Usage Chart">
-                    <h2>Network Usage</h2>
-                    <canvas id="networkChart"></canvas>
-                    <p id="networkMessage">Loading data...</p>
-                </div>
-            </section>
-        </main>
-        <footer>
-            <p>AI-BASED OS MONITOR &copy; 2025</p>
-        </footer>
-        <noscript>
-            <p>Please enable JavaScript to view the OS monitor dashboard.</p>
-        </noscript>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Based OS Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f5ff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding-top: 20px;
+        }
+
+        .main-heading {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #003366;
+        }
+
+        canvas {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-heading">AI-Based OS Monitor</h1>
+        <canvas id="memoryChart"></canvas>
+        <canvas id="diskChart"></canvas>
+        <canvas id="networkChart"></canvas>
+    </div>
+
+    <script>
+        const memoryCtx = document.getElementById('memoryChart').getContext('2d');
+        const diskCtx = document.getElementById('diskChart').getContext('2d');
+        const networkCtx = document.getElementById('networkChart').getContext('2d');
+
+        const memoryChart = new Chart(memoryCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Memory Usage (%)',
+                    borderColor: 'blue',
+                    data: [],
+                    fill: false
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        const diskChart = new Chart(diskCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Disk Usage (%)',
+                    borderColor: 'green',
+                    data: [],
+                    fill: false
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        const networkChart = new Chart(networkCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Network Activity (Mbps)',
+                    borderColor: 'red',
+                    data: [],
+                    fill: false
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        function getRandomUsage(min, max) {
+            return (Math.random() * (max - min) + min).toFixed(2);
+        }
+
+        setInterval(() => {
+            const time = new Date().toLocaleTimeString();
+            
+            if (memoryChart.data.labels.length > 10) {
+                memoryChart.data.labels.shift();
+                memoryChart.data.datasets[0].data.shift();
+            }
+
+            if (diskChart.data.labels.length > 10) {
+                diskChart.data.labels.shift();
+                diskChart.data.datasets[0].data.shift();
+            }
+
+            if (networkChart.data.labels.length > 10) {
+                networkChart.data.labels.shift();
+                networkChart.data.datasets[0].data.shift();
+            }
+
+            memoryChart.data.labels.push(time);
+            memoryChart.data.datasets[0].data.push(getRandomUsage(50, 100));
+            memoryChart.update();
+
+            diskChart.data.labels.push(time);
+            diskChart.data.datasets[0].data.push(getRandomUsage(30, 90));
+            diskChart.update();
+
+            networkChart.data.labels.push(time);
+            networkChart.data.datasets[0].data.push(getRandomUsage(10, 500)); 
+            networkChart.update();
+        }, 3000);
+    </script>
+</body>
 </html>
